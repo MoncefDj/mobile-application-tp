@@ -3,9 +3,12 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -20,13 +23,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String firstName = preferences.getString("family_name", "");
+        String familyName = preferences.getString("first_name", "");
+        TextView welcomeTextView = findViewById(R.id.welcome_textview);
+        welcomeTextView.setText("Hello " + firstName + " " + familyName);
+
         button = findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText (HomeActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
+                Toast.makeText (HomeActivity.this, "Hello " + firstName + " " + familyName, Toast.LENGTH_SHORT).show();
             }
         });
     }

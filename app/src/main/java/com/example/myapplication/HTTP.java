@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +16,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.Map;
 
-public abstract class AbstractLogInSignUp extends AppCompatActivity {
+public abstract class HTTP extends AppCompatActivity {
 
     protected final String ADRESS = "192.168.1.106";
     protected String PHP;
@@ -33,17 +32,7 @@ public abstract class AbstractLogInSignUp extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response) {
-
-                        if (response.trim().equals ("success")){
-
-                            Toast.makeText (context, ACTIVITY+" Success", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(context, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            Toast.makeText (context, ACTIVITY+" Failed", Toast.LENGTH_SHORT).show();
-                        }
+                        responseRecieved(response, context, params);
                     }
                 },
                 new Response.ErrorListener() {
@@ -60,4 +49,6 @@ public abstract class AbstractLogInSignUp extends AppCompatActivity {
         // Add request to queue
         Volley.newRequestQueue(this).add(stringRequest);
     }
+
+    protected abstract void responseRecieved(String response, Context context, Map<String, String> params);
 }
